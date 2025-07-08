@@ -13,6 +13,12 @@
 #include          <random>
 #include         "anims.h"
 
+// Display dimensions for the 1.28" GC9A01 (240x240)
+#define SCREEN_WIDTH  240
+#define SCREEN_HEIGHT 240
+#define CENTER_X      (SCREEN_WIDTH/2)
+#define CENTER_Y      (SCREEN_HEIGHT/2)
+
 ////                                  ////
 ///     Variable Initialization      ///
 //                                  //
@@ -82,8 +88,8 @@ int settingsEncoderCount = 0;
 //Games App
 bool exitGamesApp = false;
 
-//OLED
-U8G2_SH1107_PIMORONI_128X128_F_4W_HW_SPI u8g2(U8G2_R0, 10, 9 , 8);
+//OLED replacement: use ST7789/GC9A01 240x240 display
+U8G2_ST7789_240X240_F_4W_HW_SPI u8g2(U8G2_R0, 10, 9, 8);
 
 ////                                  ////
 ///     Setup & Common Functions     ///
@@ -260,8 +266,7 @@ void setup(void) {
   sEncoder.setCount(0);
   lEncoder.setCount(0);
 
-  u8g2.begin();  // begin the u8g2 library
-  u8g2.setContrast(255); // set display contrast/brightness
+  u8g2.begin();  // initialize the GC9A01 display
   u8g2.setBitmapMode(1);
 
   randomSeed(analogRead(0));
